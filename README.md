@@ -1,2 +1,2 @@
-# nems-projects
+# NEMS Linux debpack
 Various packaging codebases for NEMS Linux
