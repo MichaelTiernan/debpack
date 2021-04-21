@@ -1,0 +1,9 @@
+Package: wmic
+Essential: no
+Priority: important
+Section: plugins
+Maintainer: NEMS Linux <nems@category5.tv>
+Architecture: arm64
+Version: 1.4.1a
+Provides: wmic
+Description: Windows Management Instrumentation Client for NEMS Linux

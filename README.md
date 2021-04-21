@@ -1,2 +1,2 @@
-# debpack
-dpkg compiler for NEMS Linux repositories
+# nems-projects
+Various packaging codebases for NEMS Linux
