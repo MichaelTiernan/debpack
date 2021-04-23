@@ -1,4 +1,8 @@
 #!/bin/bash
+if [[ $EUID == 0 ]]; then
+  echo "ERROR: This script must not be run as root" 2>&1
+  exit 1
+fi
 cd all
 dpkg-deb --build 9590
 mv 9590.deb /srv/repos/apt/nems/

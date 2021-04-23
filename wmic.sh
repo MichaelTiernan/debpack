@@ -1,15 +1,15 @@
 #!/bin/bash
 
-cd amd64
-dpkg-deb --build wmic
-mv wmic.deb /srv/repos/apt/nems/
-cd /srv/repos/apt/nems/
-reprepro includedeb 1.6 wmic.deb
-rm wmic.deb
+package=wmic
 
-cd ../arm64
-dpkg-deb --build wmic
-mv wmic.deb /srv/repos/apt/nems/
+if [[ $EUID == 0 ]]; then
+  echo "ERROR: This script must not be run as root" 2>&1
+  exit 1
+fi
+
+cd all
+dpkg-deb --build $package
+mv ${package}.deb /srv/repos/apt/nems/
 cd /srv/repos/apt/nems/
-reprepro includedeb 1.6 wmic.deb
-rm wmic.deb
+reprepro includedeb 1.6 ${package}.deb
+rm ${package}.deb

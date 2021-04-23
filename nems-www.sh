@@ -2,6 +2,11 @@
 
 package=nems-www
 
+if [[ $EUID == 0 ]]; then
+  echo "ERROR: This script must not be run as root" 2>&1
+  exit 1
+fi
+
 cd all
 dpkg-deb --build $package
 mv ${package}.deb /srv/repos/apt/nems/
