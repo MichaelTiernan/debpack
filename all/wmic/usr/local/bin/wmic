@@ -29,6 +29,11 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+#
+# From NEMS Linux's perspective, big thanks to Andrew Bartlett from the Samba
+# team for directing me to this script, removing our dependency on the old,
+# unsupported Samba version.
+#
 
 import argparse
 import re

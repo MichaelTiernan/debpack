@@ -1,0 +1,11 @@
+Package: speedtest
+Essential: no
+Priority: important
+Section: plugins
+Maintainer: NEMS Linux <nems@category5.tv>
+Architecture: all
+Version: 0.03
+Provides: speedtest
+Description: NEMS Speedtest using fast.com
+Build-Depends: npm
+Depends: chromium-browser | chromium, npm, nodejs

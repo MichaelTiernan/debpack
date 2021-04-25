@@ -1,0 +1,13 @@
+#!/bin/bash
+
+  # Setup puppeteer to allow headless access to chromium-browser
+  npm i npm@latest -g
+  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true npm install -g puppeteer
+
+  # Remove old installs, should they exist
+  if [ `npm list -g | grep -c fast-cli` -eq 1 ]; then
+    npm uninstall -g fast-cli
+  fi
+  if [[ -L /usr/local/bin/fast ]] || [[ -e /usr/local/bin/fast ]]; then
+    mv /usr/local/bin/fast /usr/local/bin/fast~old
+  fi

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-package=hw_detect
+package=speedtest
 
 if [[ $EUID == 0 ]]; then
   echo "ERROR: This script must not be run as root" 2>&1
