@@ -1,0 +1,9 @@
+Package: hw_detect
+Essential: yes
+Priority: required
+Section: main
+Maintainer: NEMS Linux <nems@category5.tv>
+Architecture: all
+Version: 1.6.0
+Provides: hw_detect
+Description: Hardware detection for NEMS Linux
