@@ -75,6 +75,21 @@ if [[ $model_name == "" ]]; then
   exit 1
 fi
 
-echo $model_name
-echo $ram
-echo $model_code
+# Save data in backward-compatible format
+cat << _EOF_ > /var/log/nems/hw_model
+$model_code
+$model_name
+$DISTRO
+$ROOTFS_DEVICE_PATH
+$HW_UUID
+$HW_ARCH
+$HW_ARCH_DESCRIPTION
+$IMAGE_ADDITIONAL_CREDITS
+$HW_CPUID
+$HW_ONBOARD_WIFI
+$revision
+$HW_RELEASE_DATE
+$HW_PCB_REVISION_CODE
+$ram
+$HW_MANUFACTURER_NAME
+_EOF_
