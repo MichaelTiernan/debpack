@@ -6,12 +6,16 @@
 # Find universal system info
 ram=$(free | awk '/^Mem:/{print $2}')
 
-# If available, grab the board revision from the kernel command line and cross-reference it against known board revisions
 model_name=""
 cmdline=$(cat /proc/cmdline)
 
-search="${cmdline##*bcm2709.boardrev=}"
-boardrev="${search%% *}"
+# Try to grab the boardrev from cpuinfo (Raspberry Pi 32-bit)
+boardrev=$(cat /proc/cpuinfo | grep 'Revision' | awk '{print $3}')
+# If available, grab the board revision from the kernel command line and cross-reference it against known board revisions (64-bit systems)
+if [[ $boardrev == "" ]]; then
+  search="${cmdline##*bcm2709.boardrev=}"
+  boardrev="${search%% *}"
+fi
 
 search="${cmdline##*bcm2709.serial=}"
 serial="${search%% *}"
