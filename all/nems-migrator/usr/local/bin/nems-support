@@ -94,8 +94,10 @@ else
 
  if (( $(awk 'BEGIN {print ("'$ver'" >= "'1.2'")}') )); then
    # Additional items to backup if version matches
-   addpublic="   /etc/webmin \
-   "
+   if [[ -d /etc/webmin ]]; then
+     addpublic="   /etc/webmin \
+     "
+   fi
    if [[ -d /etc/rpimonitor ]]; then # Only exists on Raspberry Pi. NEMS 1.4+ supports other platforms.
      addpublic="$addpublic \
        /etc/rpimonitor \
@@ -105,9 +107,16 @@ else
 
  if (( $(awk 'BEGIN {print ("'$ver'" >= "'1.3'")}') )); then
    # Additional items to backup if version matches
-   addprivate="$addprivate \
-     /var/www/certs \
-   "
+   if [[ -d /var/www/certs ]]; then
+     addprivate="$addprivate \
+       /var/www/certs \
+     "
+   fi
+   if [[ -d /etc/ssl/certs ]]; then
+     addprivate="$addprivate \
+       /etc/ssl/certs \
+     "
+   fi
  fi
 
 

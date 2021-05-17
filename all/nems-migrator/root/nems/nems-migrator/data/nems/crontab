@@ -1,6 +1,6 @@
 # m h  dom mon dow   command
 
-# Determine the latest version of NEMS
+# Update NEMS Linux
 0 0 * * * /usr/local/share/nems/nems-scripts/quickfix.sh > /dev/null 2>&1
 @reboot /usr/local/share/nems/nems-scripts/quickfix.sh > /dev/null 2>&1
 
@@ -35,7 +35,6 @@
 
 # Load monit
 @reboot sleep 15 && /usr/bin/monit && sleep 10 && /usr/bin/monit reload
-15 8 * * 2 /etc/webmin/package-updates/update.pl
 
 # Log CPU Temperature NEMS0006
 */15 * * * * /usr/local/share/nems/nems-scripts/thermallogger.sh cron
