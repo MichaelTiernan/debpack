@@ -493,7 +493,10 @@ $cloudauth = shell_exec('/usr/local/bin/nems-info cloudauth');
 <?php if (ver('nems') >= 1.6 || isset($_GET['beta'])) { ?>
 
   <div class="col-md-4">
-    <header>NEMS PHP Agent</header>
+    <header>
+      NEMS PHP Agent
+      <a href="https://docs.nemslinux.com/en/latest/check_commands/check_nems_php_agent.html" target="_blank"><i class="fa fa-question-circle" style="font-size: 0.8em; color: #1b4a90; text-decoratoin:none;"></i></a>
+    </header>
     <fieldset>
         <section>
             <label class="label">Encryption/Decryption Passphrase</label>
@@ -916,7 +919,10 @@ $cloudauth = shell_exec('/usr/local/bin/nems-info cloudauth');
 ?>
 
               <section>
-                  <h1>TEMPer</h1>
+                  <h1>
+                    TEMPer
+                    <a href="https://docs.nemslinux.com/en/latest/accessories/temper.html" target="_blank"><i class="fa fa-question-circle" style="font-size: 0.8em; color: #1b4a90; text-decoratoin:none;"></i></a>
+                  </h1>
                   <p><b>Only adjust these if your TEMPer readings are inaccurate.</b> This is an adjustment of the <em>sensor</em>, not the check command threshold. If you are looking to change your thresholds, that is done in <a href="/nconf/" target="_blank">NEMS NConf</a>, not here.</p>
                   <p>You can adjust the calibration of your TEMPer sensor. It is recommended you set a known-accurate temperature and humidity sensor near your NEMS Server and let both devices sit, turned on, for 24 hours before calibrating. Then, by comparing the values, you can adjust your TEMPer settings here to ensure high accuracy. Please also ensure you are plugging your TEMPer device into a USB extension cord, not directly to your NEMS Server. This helps avoid the heat of your NEMS Server causing inaccurate thermal readings.</p>
                   <input type="hidden" name="temperTempTrue" value="<?= $temper->{0}->{'internal temperature'} ?>" />
