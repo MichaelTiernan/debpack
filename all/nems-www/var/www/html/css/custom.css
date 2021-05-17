@@ -144,3 +144,8 @@ p.thankyou a:hover, p.thankyou a:active {
   color: transparent !important;
   text-shadow:0 0 7px #72c02c, 0 0 10px #72c02c;
 }
+
+pre {
+  background: #333;
+  color: #eee;
+}
