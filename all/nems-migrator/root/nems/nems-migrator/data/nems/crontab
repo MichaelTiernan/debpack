@@ -1,8 +1,8 @@
 # m h  dom mon dow   command
 
 # Update NEMS Linux
-0 0 * * * /usr/local/share/nems/nems-scripts/quickfix.sh > /dev/null 2>&1
-@reboot /usr/local/share/nems/nems-scripts/quickfix.sh > /dev/null 2>&1
+0 0 * * * /usr/local/bin/nems-quickfix > /dev/null 2>&1
+@reboot /usr/local/bin/nems-quickfix > /dev/null 2>&1
 
 # Backup the configuration and logs for easy migration
 */5 * * * * /root/nems/nems-migrator/backup.sh > /dev/null 2>&1
@@ -38,3 +38,48 @@
 
 # Log CPU Temperature NEMS0006
 */15 * * * * /usr/local/share/nems/nems-scripts/thermallogger.sh cron
+
+# Run NEMS Migrator Off-Site Backup NEMS0007
+0 0 * * * /root/nems/nems-migrator/offsite-backup.sh > /dev/null 2>&1
+
+# Log NEMS Migrator Off-Site Backup Stats NEMS0008
+30 4 * * * /usr/local/share/nems/nems-scripts/osb-stats.sh > /dev/null 2>&1
+
+# Test Memory for Errors Weekly NEMS0009
+0 3 * * 0 /usr/sbin/memtester 500 10 > /var/log/nems/memtest.log
+
+# Detect and Set Local DNS Settings NEMS0010
+@reboot /sbin/resolvconf -u > /dev/null 2>&1
+
+# support.nems Self-Destruct NEMS0011
+* * * * * /root/nems/nems-migrator/support-sd.sh > /dev/null 2>&1
+
+# nems-tools warninglight NEMS0012
+@reboot /root/nems/nems-tools/warninglight >> /var/log/nems/nems-tools/warninglight 2>&1
+
+# NEMS Cloud State Update NEMS0013
+* * * * * /usr/local/share/nems/nems-scripts/cloud.sh > /dev/null 2>&1
+
+# NEMS Checkin NEMS0014
+*/5 * * * * /usr/local/share/nems/nems-scripts/checkin.sh > /dev/null 2>&1
+
+# piWatcher NEMS0015
+@reboot /root/nems/nems-tools/piwatcher > /dev/null 2>&1
+
+# NEMS Tools GPIO Extender Server NEMS0016
+@reboot /root/nems/nems-tools/gpio-extender/gpioe-server > /dev/null 2>&1
+
+# Enable non-root access to TEMPer NEMS0017
+@reboot /usr/local/share/nems/nems-scripts/temperinit > /dev/null 2>&1
+
+# PiVoyager NEMS0018
+@reboot /root/nems/nems-tools/pivoyager > /dev/null 2>&1
+
+# Run MRTG Every 5 Minutes NEMS0019
+*/5 * * * * /usr/local/share/nems/nems-scripts/mrtg-gen.sh > /dev/null 2>&1
+
+# Set permissions for USB access (TEMPer) NEMS0020
+*/1 * * * * /root/nems/nems-admin/build/500-temper > /dev/null 2>&1
+
+# Detect NEMS Server local IP on same Subnet and set NEMS Tools config to point to it NEMS0021
+@reboot /root/nems/nems-tools/detect > /dev/null 2>&1
