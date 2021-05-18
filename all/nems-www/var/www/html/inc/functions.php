@@ -13,11 +13,11 @@
     );
     switch ($product) {
       case 'nems':
-        $nemsver = shell_exec('/usr/local/share/nems/nems-scripts/info.sh nemsver');
+        $nemsver = shell_exec('/usr/local/bin/nems-info nemsver');
         return trim($nemsver); // version of NEMS
         break;
       case 'nems-branch':
-        $nemsbranch = shell_exec('/usr/local/share/nems/nems-scripts/info.sh nemsbranch');
+        $nemsbranch = shell_exec('/usr/local/bin/nems-info nemsbranch');
         return trim($nemsbranch);
         break;
       case 'nems-available': // obtained from our site each day via root cron
@@ -31,8 +31,8 @@
         return trim($nems_branch_avail);
         break;
       case 'platform': // which platform is this for
-        $platform->num = trim(shell_exec('/usr/local/share/nems/nems-scripts/info.sh platform'));
-        $platform->name = trim(shell_exec('/usr/local/share/nems/nems-scripts/info.sh platform-name'));
+        $platform->num = trim(shell_exec('/usr/local/bin/nems-info platform'));
+        $platform->name = trim(shell_exec('/usr/local/bin/nems-info platform-name'));
         return $platform; // version of NEMS currently available on our site
       	break;
     }

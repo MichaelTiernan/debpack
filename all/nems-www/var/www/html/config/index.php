@@ -217,7 +217,7 @@ function sanitize($string) {
 }
 
 // File storage devices
-  $drivestmp = shell_exec('/usr/local/share/nems/nems-scripts/info.sh drives');
+  $drivestmp = shell_exec('/usr/local/bin/nems-info drives');
   $drivestmp = json_decode($drivestmp, true);
   if (is_array($drivestmp['blockdevices']) && count($drivestmp['blockdevices']) > 0) {
     foreach ($drivestmp['blockdevices'] as $blockdevice) {
