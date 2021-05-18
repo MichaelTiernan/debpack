@@ -11,8 +11,10 @@ confdest=$2 # Importing from DESTINATION because we already imported the backup 
   # Clear the MySQL Database (replace with our Clean DB from NEMS-Migrator)
   rm -rf /var/lib/mysql/
   if (( $(awk 'BEGIN {print ("'$ver'" >= "'1.6'")}') )); then
-    printf "Using v1.6 defaults... "
-    cp -R /root/nems/nems-migrator/data/mysql/NEMS-Clean /var/lib
+    printf "Decompressing default database... "
+    cd /var/lib/
+    tar xfz /root/nems/nems-migrator/data/mysql/NEMS-Clean.tar.gz
+    chown -R mysql:mysql /var/lib/mysql
   elif (( $(awk 'BEGIN {print ("'$ver'" >= "'1.5'")}') )); then
     printf "Using v1.5 defaults... "
     cp -R /root/nems/nems-migrator/data/1.5/mysql/NEMS-Clean /var/lib

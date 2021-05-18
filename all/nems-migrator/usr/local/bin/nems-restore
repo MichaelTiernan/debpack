@@ -195,10 +195,8 @@ else
                                          /root/nems/nems-migrator/data/reconcile-nagios.sh $ver $confsrc $confdest
 
                                          # NEMS 1.5+ imports the contactgroups, so needs to have correct username
-                                         if (( $(awk 'BEGIN {print ("'$ver'" >= "'1.5'")}') )); then
-                                           /bin/sed -i -- 's/nemsadmin/'"$username"'/g' $confdest/global/contactgroups.cfg
-                                           /bin/sed -i -- 's/nemsadmin/'"$username"'/g' $confdest/global/contacts.cfg
-                                         fi
+                                         /bin/sed -i -- 's/nemsadmin/'"$username"'/g' $confdest/global/contactgroups.cfg
+                                         /bin/sed -i -- 's/nemsadmin/'"$username"'/g' $confdest/global/contacts.cfg
 
 					 # Clear MySQL database and import new consolidated configs into NConf
 					 /root/nems/nems-migrator/data/nconf-import.sh $ver $confdest
@@ -303,22 +301,16 @@ else
 				   service mysql start
 				   service $nagios start
 
-				# NEMS 1.5+
-				if (( $(awk 'BEGIN {print ("'$ver'" >= "'1.5'")}') )); then
-				  cp -fr /root/nems/nems-migrator/data/1.5/nagios/etc/* /usr/local/nagios/etc/
+				  cp -fr /root/nems/nems-migrator/data/nagios/etc/* /usr/local/nagios/etc/
 				  /bin/sed -i -- 's/nemsadmin/'"$username"'/g' /usr/local/nagios/etc/cgi.cfg
 
 				  # Remove nconf history, should it exist
 				  mysql -u nconf -pnagiosadmin nconf -e "TRUNCATE History"
 
-				  # Change contact info in NConf
-				  if (( $(awk 'BEGIN {print ("'$ver'" >= "'1.5'")}') )); then
-				    # Update user info (no need to import in 1.5
+				    # Update user info in NEMS NConf
 				    echo "  Updating contact: $username"
 				    mysql -t -u nconf -pnagiosadmin nconf -e "UPDATE ConfigValues SET attr_value='$username' WHERE fk_id_attr=47;"
 				    mysql -t -u nconf -pnagiosadmin nconf -e "UPDATE ConfigValues SET attr_value='$email' WHERE fk_id_attr=55;"
-				  fi
-				fi
 
 
 				   echo ""
@@ -337,7 +329,7 @@ else
 				   echo Your backup file is either invalid, or an unsupported version. Aborted.
 				 fi
 
-#				 rm -rf /tmp/nems_migrator_restore
+				 rm -rf /tmp/nems_migrator_restore
 
 				 end=`date +%s`
 				 runtime=$((end-start))
