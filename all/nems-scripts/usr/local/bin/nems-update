@@ -42,12 +42,37 @@ else
 
   echo "Updating NEMS Core Components"
 
-  # Update nems-migrator
-  echo " - nems-migrator"
+  echo "nems-migrator ..."
   apt-get install -y nems-migrator
-
   # Get the latest version data from the NEMS API
   /usr/local/share/nems/nems-scripts/tasks.sh update platform
+  echo
+
+  echo "nems-scripts ... "
+  apt-get install -y nems-scripts
+  echo
+
+  echo "9590 ... "
+  apt-get install -y 9590
+  echo
+
+  echo "hw-detect ... "
+  apt-get install -y hw-detect
+  echo
+
+  echo "nems-www ... "
+  apt-get install -y nems-www
+  echo
+
+# Don't do this yet; not ready
+#  echo "speedtest ... "
+#  apt-get install -y speedtest
+#  echo
+
+  echo "wmic ... "
+  apt-get install -y wmic
+  echo
+
 
   # Update nems-tv
   echo " - nems-tv... "
@@ -172,10 +197,6 @@ else
   else
     echo "   New Commit: $commit"
   fi
-
-  # Update self
-  echo " - nems-scripts... "
-  apt-get install -y nems-scripts
 
   # Perform any fixes that have been released since NEMS was built
   printf "Running updates and fixes... "

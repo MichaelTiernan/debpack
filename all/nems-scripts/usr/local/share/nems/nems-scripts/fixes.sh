@@ -3,7 +3,7 @@
 # No need to run this directly.
 # Instead, run: sudo nems-update
 
- online=$(/usr/local/share/nems/nems-scripts/info.sh online)
+ online=$(/usr/local/bin/nems-info online)
  if [[ $online == 0 ]]; then
    echo "Internet is offline. NEMS needs Internet connectivity."
    echo ""
@@ -47,8 +47,8 @@
  fi
 
  # using hard file location rather than symlink as symlink may not exist yet on older versions
- platform=$(/usr/local/share/nems/nems-scripts/info.sh platform)
- ver=$(/usr/local/share/nems/nems-scripts/info.sh nemsver)
+ platform=$(/usr/local/bin/nems-info platform)
+ ver=$(/usr/local/bin/nems-info nemsver)
 
  # Update apt here so we don't have to do it below
  apt-get clean
