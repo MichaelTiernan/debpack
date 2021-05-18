@@ -183,7 +183,7 @@ else
 				     resourcesrc=/etc/nagios3
 				   fi
 
-				   echo "Source: /tmp/nems_migrator_restore$confsrc"
+#				   echo "Source: /tmp/nems_migrator_restore$confsrc"
 				   if [[ -d "/tmp/nems_migrator_restore$confsrc" ]]; then
 
 

@@ -9,12 +9,13 @@ confdest=$2 # Importing from DESTINATION because we already imported the backup 
   printf "Creating a clean NEMS NConf configuration... "
   systemctl stop mysql
   # Clear the MySQL Database (replace with our Clean DB from NEMS-Migrator)
-  rm -rf /var/lib/mysql/
+  if [[ -e /var/lib/mysql/ ]]; then
+    rm -rf /var/lib/mysql/
+  fi
   if (( $(awk 'BEGIN {print ("'$ver'" >= "'1.6'")}') )); then
     printf "Decompressing default database... "
     cd /var/lib/
     tar xfz /root/nems/nems-migrator/data/mysql/NEMS-Clean.tar.gz
-    chown -R mysql:mysql /var/lib/mysql
   elif (( $(awk 'BEGIN {print ("'$ver'" >= "'1.5'")}') )); then
     printf "Using v1.5 defaults... "
     cp -R /root/nems/nems-migrator/data/1.5/mysql/NEMS-Clean /var/lib
@@ -26,7 +27,9 @@ confdest=$2 # Importing from DESTINATION because we already imported the backup 
     printf "Using legacy defaults... "
     cp -R /root/nems/nems-migrator/data/mysql/NEMS-Clean /var/lib
   fi
-  mv /var/lib/NEMS-Clean /var/lib/mysql
+  if [[ -d /var/lib/NEMS-Clean ]]; then
+    mv /var/lib/NEMS-Clean /var/lib/mysql
+  fi
   chown -R mysql:mysql /var/lib/mysql
   systemctl start mysql
   echo "Done."
@@ -47,12 +50,12 @@ confdest=$2 # Importing from DESTINATION because we already imported the backup 
     /root/nems/nems-migrator/data/cfg-exploder.sh $confdest/global/checkcommands.cfg $tmpdir
     cd $tmpdir
     printf -- "\e[37mImporting:\e[97m checkcommand\033[0m\n"
-    echo ""
-    echo "NOTE: Don't worry if you see several checkcommands aborted."
-    echo "      This simply means they are already in the database."
-    echo ""
-    sleep 2
-    for f in *.cfg; do /var/www/nconf/bin/add_items_from_nagios.pl -c checkcommand -f $f 2>&1 | grep -E "ERROR"; done
+#    echo ""
+#    echo "NOTE: Don't worry if you see several checkcommands aborted."
+#    echo "      This simply means they are already in the database."
+#    echo ""
+#    sleep 2
+    for f in *.cfg; do /var/www/nconf/bin/add_items_from_nagios.pl -c checkcommand -f $f 2>&1 | grep -E "ERROR" > /dev/null 2>&1; done
     rm -rf $tmpdir
   fi
   printf -- "\e[37mImporting:\e[97m contact\033[0m\n" && /var/www/nconf/bin/add_items_from_nagios.pl -c contact -f $confdest/global/contacts.cfg 2>&1 | grep -E "ERROR"
