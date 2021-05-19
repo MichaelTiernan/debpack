@@ -11,7 +11,7 @@
 # Revised by Robbie Ferguson for NEMS Linux
 
 if [[ -e /var/log/nems ]]; then
-  platform=$(/usr/local/share/nems/nems-scripts/info.sh platform)
+  platform=$(/usr/local/bin/nems-info platform)
 else
   platform=98000
 fi
@@ -69,15 +69,17 @@ else
   fi
 fi
 
+TEMPF=$(echo "scale=2;((9/5) * ${TEMP}) + 32" |bc)
+
 if (( $(echo "${TEMP} > ${CRIT}" | bc -l) )); then
-    echo "TEMPERATURE CRITICAL - CPU Temp: ${TEMP} °C | cpu_temp=${TEMP};${WARN};${CRIT};;"
+    echo "TEMPERATURE CRITICAL - CPU Temp: ${TEMP} °C / ${TEMPF} °F | cpu_temp=${TEMP};${WARN};${CRIT};;"
     exit 2
 fi
 
 if (( $(echo "${TEMP} > ${WARN}" | bc -l) )); then
-    echo "TEMPERATURE WARNING - CPU Temp: ${TEMP} °C | cpu_temp=${TEMP};${WARN};${CRIT};;"
+    echo "TEMPERATURE WARNING - CPU Temp: ${TEMP} °C / ${TEMPF} °F | cpu_temp=${TEMP};${WARN};${CRIT};;"
     exit 1
 fi
 
-echo "TEMPERATURE OK - CPU Temp: ${TEMP} °C | cpu_temp=${TEMP};${WARN};${CRIT};;"
+echo "TEMPERATURE OK - CPU Temp: ${TEMP} °C / ${TEMPF} °F | cpu_temp=${TEMP};${WARN};${CRIT};;"
 exit 0
