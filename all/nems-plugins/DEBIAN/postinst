@@ -1,0 +1,2 @@
+#!/bin/bash
+chown -R nagios:nagios /etc/check_wmi_plus
