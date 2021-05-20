@@ -1054,6 +1054,9 @@ $(function() {
                       		  if (checkConfEnabled('monitorix') == true) $checked = 'CHECKED="CHECKED"'; else $checked = '';
                       		  echo '<label class="toggle text-right"><input ' . $checked . ' name="monitorix" type="checkbox" class="services reboot"><i></i>Monitorix</label>';
 
+                      		  if (checkConfEnabled('ibmi') == true) $checked = 'CHECKED="CHECKED"'; else $checked = '';
+                      		  echo '<label class="toggle text-right"><input ' . $checked . ' name="ibmi" type="checkbox" class="services reboot"><i></i>IBM i Monitoring Daemon</label>';
+
                       		?>
                       		<script>
                       		window.onload = function() {
