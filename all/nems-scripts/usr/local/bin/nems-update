@@ -54,6 +54,10 @@ else
   apt-get install -y nems-scripts
   echo
 
+  echo "nems-plugins ... "
+  apt-get install -y nems-plugins
+  echo
+
   echo "9590 ... "
   apt-get install -y 9590
   echo
