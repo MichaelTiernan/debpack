@@ -2,6 +2,7 @@
 
 echo ""
 echo "NEMS Update"
+echo "By Robbie Ferguson"
 echo ""
 
 if [[ $EUID -ne 0 ]]; then
@@ -41,6 +42,7 @@ else
   git config --global --unset http.postBuffer
 
   echo "Updating NEMS Core Components"
+  echo
 
   echo "nems-migrator ..."
   apt-get install -y nems-migrator

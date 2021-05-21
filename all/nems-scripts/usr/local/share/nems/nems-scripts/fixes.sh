@@ -79,7 +79,7 @@ if (( $(awk 'BEGIN {print ("'$ver'" >= "'1.4.1'")}') )); then
 
   # Benchmarks have not been run yet. Force the first-run (will also run every Sunday on Cron)
   if [[ ! -d /var/log/nems/benchmarks ]] || [[ ! -f /var/log/nems/benchmarks/7z-multithread ]]; then
-    /usr/local/share/nems/nems-scripts/benchmark.sh
+    /usr/local/bin/nems-benchmark
   fi
 
   if ! grep -q "NEMS00000" /etc/monit/conf.d/nems.conf; then

@@ -49,8 +49,9 @@
   # 5231, 5258, etc are the ID corresponding with the host preset, which can be found by enabling General Query Log and monitoring the insert command when saving the host presets
 # /etc/mysql/mariadb.conf.d/50-server.cnf
   # 5481 however, is the ID of the NEMS host (default host)
-  if ($ver >= 1.6) { // During 1.6 alpha, the ID was changed to 5340.
-    $fk_id = 5340;
+# tail -f /var/log/mysql/mysql.log | grep ", 81, 0)"
+  if ($ver >= 1.6) {
+    $fk_id = 5331;
     $query = "INSERT INTO ItemLinks (fk_id_item, fk_item_linked2, fk_id_attr, cust_order) VALUES (5276, $fk_id, 81, 0), (5259, $fk_id, 81, 0), (5231, $fk_id, 81, 0), (5258, $fk_id, 81, 0);";
   } else if ($ver >= 1.5) { // NEMS host was re-created, changing the ID from 5286 to 5473, then in NEMS 1.6 branch it is 5481.
 #    $query = "INSERT INTO ItemLinks (fk_id_item, fk_item_linked2, fk_id_attr, cust_order) VALUES (5276, 5473, 81, 0), (5259, 5473, 81, 0), (5231, 5473, 81, 0), (5258, 5473, 81, 0);";

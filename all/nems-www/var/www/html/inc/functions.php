@@ -176,7 +176,11 @@
           $response = true;
         }
       } else {
-        $response = true; // it's true because it has not been set otherwise
+        if ($service == 'ibmi') {
+          $response = false; // this service's default is DISABLED unless specifically enabled by the user
+        } else {
+          $response = true; // it's true because it has not been set otherwise
+        }
       }
     }
     return($response);
