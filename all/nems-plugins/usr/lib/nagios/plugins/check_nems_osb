@@ -11,6 +11,7 @@
 */
   $auth=shell_exec('/usr/local/bin/nems-info cloudauth');
   if ($auth == 0) {
+    // UNKNOWN State
     echo 'NEMS Cloud Services not authorized.';
     exit(3);
   }
@@ -18,13 +19,16 @@
   if (file_exists($osb_log)) {
     $log = explode('::',shell_exec('tail -n 1 ' . $osb_log));
     if ($log[1] == 2) {
+      // CRITICAL State
       echo 'OSB ' . $log[2] . ': ' . $log[3];
       exit(2);
     } else if ($log[1] == 1 && strtotime($log[0]) < strtotime('-2 days')) {
+      // WARNING State
       echo 'Last OSB was ' . date('l M j, Y',strtotime($log[0]));
       exit(1);
     } else if ($log[1] == 1) {
-      echo 'OSB ' . $log[2] . ' (' . date('D M j, Y',strtotime($log[0])) . ')';
+      // OK State
+      echo 'OSB ' . $log[2] . ' (' . date('l M j, Y',strtotime($log[0])) . ')';
       exit(0);
     }
   } else {
