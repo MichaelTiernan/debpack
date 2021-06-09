@@ -23,6 +23,12 @@
                      PHP_EOL . '         Will check /var/www/mrtg/10.0.0.1_1.log and warn at 30 mb/s up, 200 mb/s down. Crit at 40 mb/s up, 400 mb/s down.' . PHP_EOL .
  
            PHP_EOL . 'See https://docs.nemslinux.com/en/latest/advanced/mrtg.html' . PHP_EOL . PHP_EOL;
+
+  if (!file_exists('/usr/lib/nagios/plugins/check_mrtgtraf.pl')) {
+    echo 'check_mrtgtraf.pl is missing.' . PHP_EOL;
+    exit(1);
+  }
+
   if (isset($args) && is_array($args)) {
     if (
       isset($args['H']) &&
@@ -48,7 +54,7 @@
       }
       $command = '/usr/lib/nagios/plugins/check_mrtgtraf.pl -F AVG -L /var/www/mrtg/' . $args['H'] . '_' . $args['p'] . '.log -w ' . (floatval($args['wu'])*$multiplier) . ',' . (floatval($args['wd'])*$multiplier) . ' -c ' . (floatval($args['cu'])*$multiplier) . ',' . (floatval($args['cd'])*$multiplier);
       exec($command, $mrtgtraf, $response);
-      echo $mrtgtraf[0];
+      if (is_array($mrtgtraf) && isset($mrtgtraf[0])) echo $mrtgtraf[0];
       exit($response);
     } else {
       echo $usage;
