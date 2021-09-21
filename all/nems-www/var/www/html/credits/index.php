@@ -198,6 +198,7 @@ window.findKeyframesRule = function (rule) {
             <a href="https://www.rnitsolutions.com/" target="_blank"><img src="assets/rnit_logo_full_dark.png" class="img-responsive" style="max-height: 80px;" /></a></h1>
 
             <h1><b>I could not develop NEMS Linux without the financial support of its users.</b><br />The following <a href="https://patreon.com/nems" target="_blank">Patrons</a> have opted to have their name listed in the credits.</h1>
+
 <?php
 $list = explode(PHP_EOL, '
 Patrick Kersten
@@ -233,7 +234,10 @@ Nato Riley
 Joe Luzzi
 Xander Brennan
 Sam Lakhani
+John Sheftic
 ');
+sort($list);
+
 foreach ($list as $name) {
   if (trim(strlen($name)) > 0) {
     echo '<h4>' . trim($name) . '</h4>' . PHP_EOL;
