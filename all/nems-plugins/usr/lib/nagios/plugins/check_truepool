@@ -41,7 +41,7 @@ fi
 
 if [[ $points_pplns > 0 ]]; then
   if [[ $points > 0 ]]; then
-    echo "OK - Difficulty: $difficulty | Points: $points_pplns"
+    echo "OK - Difficulty: $difficulty / Points: $points_pplns"
     exit 0
   else
     echo "WARNING - Farm appears online, but is not generating points."
