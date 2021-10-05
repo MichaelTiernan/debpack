@@ -23,7 +23,8 @@ fi
 launcher=$1
 api="https://truepool.io/api/v1.0/launcher/"
 resp=$(curl -s "${api}${launcher}/")
-points=$(echo $resp | jq '.points_pplns')
+points=$(echo $resp | jq '.points')
+points_pplns=$(echo $resp | jq '.points_pplns')
 difficulty=$(echo $resp | jq '.difficulty')
 detail=$(echo $resp | jq '.detail')
 
@@ -31,17 +32,25 @@ detail=$(echo $resp | jq '.detail')
 if [[ $points == "null" ]]; then
   points=0
 fi
+if [[ $points_pplns == "null" ]]; then
+  points_pplns=0
+fi
 if [[ $difficulty == "null" ]]; then
   difficulty=0
 fi
 
-if [[ $points > 0 ]]; then
-  echo "OK - Difficulty: $difficulty | Points: $points"
-  exit 0
+if [[ $points_pplns > 0 ]]; then
+  if [[ $points > 0 ]]; then
+    echo "OK - Difficulty: $difficulty | Points: $points_pplns"
+    exit 0
+  else
+    echo "WARNING - Farm appears online, but is not generating points."
+    exit 1
+  fi
 elif [[ $detail != 'null' ]]; then
   echo "CRITICAL - $detail"
   exit 2
 else
-  echo "CRITICAL - Farm Offline"
+  echo "CRITICAL - Farm appears to be offline."
   exit 2
 fi
