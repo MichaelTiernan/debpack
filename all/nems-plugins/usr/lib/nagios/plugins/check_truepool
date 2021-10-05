@@ -1,0 +1,47 @@
+#!/bin/bash
+# Check Truepool.io Chia Pool v1.0
+# Ensure your Chia farm is online and farming to the pool
+# By Robbie Ferguson // https://nemslinux.com/
+
+# Depends: jq curl
+
+if [ -z "$1" ] ; then
+    echo "UNKNOWN - missing Launcher ID"
+    exit 3
+fi
+
+if ! ( command -v jq >/dev/null ) ; then
+    echo "UNKNOWN - jq command not found"
+    exit 3
+fi
+
+if ! ( command -v curl >/dev/null ) ; then
+    echo "UNKNOWN - curl command not found"
+    exit 3
+fi
+
+launcher=$1
+api="https://truepool.io/api/v1.0/launcher/"
+resp=$(curl -s "${api}${launcher}/")
+points=$(echo $resp | jq '.points_pplns')
+difficulty=$(echo $resp | jq '.difficulty')
+detail=$(echo $resp | jq '.detail')
+
+# jq uses 'null' instead of 0, so correct it
+if [[ $points == "null" ]]; then
+  points=0
+fi
+if [[ $difficulty == "null" ]]; then
+  difficulty=0
+fi
+
+if [[ $points > 0 ]]; then
+  echo "OK - Difficulty: $difficulty | Points: $points"
+  exit 0
+elif [[ $detail != 'null' ]]; then
+  echo "CRITICAL - $detail"
+  exit 2
+else
+  echo "CRITICAL - Farm Offline"
+  exit 2
+fi
