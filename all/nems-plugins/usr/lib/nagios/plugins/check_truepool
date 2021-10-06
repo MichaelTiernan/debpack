@@ -1,5 +1,5 @@
 #!/bin/bash
-# Check Truepool.io Chia Pool v1.0
+# Check Truepool.io Chia Pool v1.1
 # Ensure your Chia farm is online and farming to the pool
 # By Robbie Ferguson // https://nemslinux.com/
 
@@ -23,10 +23,13 @@ fi
 launcher=$1
 api="https://truepool.io/api/v1.0/launcher/"
 resp=$(curl -s "${api}${launcher}/")
-points=$(echo $resp | jq '.points')
-points_pplns=$(echo $resp | jq '.points_pplns')
-difficulty=$(echo $resp | jq '.difficulty')
-detail=$(echo $resp | jq '.detail')
+points=$(echo $resp | jq -r '.points')
+points_pplns=$(echo $resp | jq -r '.points_pplns')
+difficulty=$(echo $resp | jq -r '.difficulty')
+detail=$(echo $resp | jq -r '.detail')
+share=$(echo $resp | jq -r '.share_pplns')
+share_percent=$(echo "scale=2;${share}*100" | bc)
+name=$(echo $resp | jq -r '.name')
 
 # jq uses 'null' instead of 0, so correct it
 if [[ $points == "null" ]]; then
@@ -41,7 +44,9 @@ fi
 
 if [[ $points_pplns > 0 ]]; then
   if [[ $points > 0 ]]; then
-    echo "OK - Difficulty: $difficulty / Points: $points_pplns"
+    o_pplns=$(printf "%'d" $points_pplns)
+    o_share=$(printf "%.4f" $share_percent)
+    echo "OK - Points: $o_pplns (24 Hrs) / Share: ${o_share}% / Diff: $difficulty | $name"
     exit 0
   else
     echo "WARNING - Farm appears online, but is not generating points."
