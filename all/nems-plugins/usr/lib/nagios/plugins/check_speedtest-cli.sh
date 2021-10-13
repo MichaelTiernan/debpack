@@ -22,7 +22,7 @@
 ########################################################################################################################################################
 
 plugin_name="NEMS speedtest-cli plugin"
-version="2.0"
+version="2.1"
 # Based on "1.2 2017122011:01"
 
 #####################################################################
@@ -31,7 +31,7 @@ version="2.0"
 #
 #	Version 1.0 - Initial Release
 #
-#	Version 1.1 - Added requirement to use server id in test and need to define 
+#	Version 1.1 - Added requirement to use server id in test and need to define
 #			full path to speedtest binary - thanks to Sigurdur Bjarnason
 #			for changes and improvements
 #
@@ -55,6 +55,8 @@ version="2.0"
 #                       Previously, exit would occur too soon
 #
 #       Version 2.0 - Ookla has changed their licensing. Moved to fast.com.
+#
+#	Version 2.1 - Make NEMS configuration dynamic in a way that would allow use of script on non-NEMS systems.
 #
 #####################################################################
 # function to output script usage
@@ -180,10 +182,16 @@ function float_cond()
 
 # Set up the variable for the location of the speedtest binary.
 # Edit the line below so that the variable is defined as the location
-# to speedtest on your system. On mine it is /usr/local/bin 
+# to speedtest on your system. On mine it is /usr/local/bin
 # Ensure to leave the last slash off!
 # You MUST define this or the script will not run!
+
 STb=/usr/local/share/nems/nems-scripts
+
+# If this is a NEMS Linux server, get the setting from config
+if [[ -e  /usr/local/bin/nems-info ]]; then
+  ses_resp=`/usr/local/bin/nems-info speedtest`
+fi
 
 # Set up the variables to take the arguments
 DLw=
@@ -191,7 +199,7 @@ DLc=
 ULw=
 ULc=
 Loc=
-SEs=`/usr/local/bin/nems-info speedtest`
+SEs=${ses_resp}
 PerfData=
 MaxDL=
 MaxUL=
