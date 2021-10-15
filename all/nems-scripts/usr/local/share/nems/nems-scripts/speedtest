@@ -40,6 +40,9 @@ if [ $running == 0 ]; then
     result2=$(ping -qc1 cloudflare.com 2>&1 | awk -F'/' 'END{ print (/^rtt/? "OK "$5" ms":"FAIL") }')
     echo $result1 | dd of=${log} > /dev/null 2> /dev/null
     echo $result2 | dd of=${log2} > /dev/null 2> /dev/null
+  else
+    result1=$(cat ${log})
+    result2=$(cat ${log2})
   fi
 fi
 
