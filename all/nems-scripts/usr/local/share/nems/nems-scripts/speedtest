@@ -38,8 +38,8 @@ if [ $running == 0 ]; then
   if [[ $(find ${log} -mmin +2) ]]; then
     result1=$(yes | /usr/local/bin/speed-cloudflare-cli | sed 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g')
     result2=$(ping -qc1 cloudflare.com 2>&1 | awk -F'/' 'END{ print (/^rtt/? "OK "$5" ms":"FAIL") }')
-    echo $result1 | dd of=${log1} > /dev/null 2&>1
-    echo $result2 | dd of=${log2} > /dev/null 2&>1
+    echo $result1 | dd of=${log} > /dev/null 2> /dev/null
+    echo $result2 | dd of=${log2} > /dev/null 2> /dev/null
   fi
 fi
 
